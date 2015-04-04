@@ -1,0 +1,9 @@
+{
+  "name": "angular-hmr-loader",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "source-map": "0.1.40"
+  }
+}
