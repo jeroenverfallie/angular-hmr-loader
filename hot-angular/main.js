@@ -12,16 +12,21 @@ var directiveCache = {};
 
 var save = function(n, obj, exists) {
 
+    var changes = false;
+
+
+    changes = changes || JSON.stringify(obj.template) != JSON.stringify(templateCache[n]);
     if (obj.template) {
         templateCache[n] = obj.template;
     }
 
+    changes = changes || JSON.stringify(obj.controller) != JSON.stringify(controllerCache[n]);
     if (obj.controller) {
         controllerCache[n] = obj.controller;
     }
 
 
-    if (exists) {
+    if (changes && exists) {
         var elm = angular.element(document.querySelector('.ng-scope'));
         if (elm) {
             $state = elm.injector().get('$state');
@@ -33,6 +38,8 @@ var save = function(n, obj, exists) {
             });
         }
     }
+
+    return changes;
 };
 
 
@@ -66,18 +73,20 @@ var directive = function(n, d) {
 
     // directiveCache[n] = obj;
 
-    save.bind(this)(n, obj, exists);
+    var changes = save.bind(this)(n, obj, exists);
 
     if (!exists) {
         ANGULAR_MODULE.directive(n, function() {
             return transform(n, obj);
         });
         MODULE_CACHE[n] = true;
-    } //else {
-    //     COMPILEPROVIDER.directive(n, function() {
-    //         return transform(n, obj);
-    //     });
-    // }
+    } else {
+        if(!changes) {
+            window.location.reload();
+        }
+    }
+
+    
     
     return {
         directive: directive
