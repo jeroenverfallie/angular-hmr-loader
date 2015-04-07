@@ -27,7 +27,7 @@ module.exports = function (source, map) {
 
   prependText = [
     'module.hot.accept();',
-    'var hotAngular = require("angular-hot-loader/hot-angular/main.js");'
+    'var hotAngular = require("angular-hmr-loader/hot-angular/main.js");'
   ].join(' ');
 
   processedSource = source.replace(ANGULAR_DIRECTIVE_RE, 'hotAngular.module("$1").directive(');
