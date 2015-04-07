@@ -78,6 +78,10 @@ var directive = function(n, d) {
     //         return transform(n, obj);
     //     });
     // }
+    
+    return {
+        directive: directive
+    };
 
 };
 
