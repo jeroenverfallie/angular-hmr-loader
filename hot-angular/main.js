@@ -19,8 +19,8 @@ var save = function(n, obj, exists) {
     if (obj.template) {
         templateCache[n] = obj.template;
     }
-
-    changes = changes || JSON.stringify(obj.controller) != JSON.stringify(controllerCache[n]);
+    
+    changes = changes || obj.controller + '' != controllerCache[n] + '';
     if (obj.controller) {
         controllerCache[n] = obj.controller;
     }
