@@ -19,7 +19,7 @@ var save = function(n, obj, exists) {
     if (obj.template) {
         templateCache[n] = obj.template;
     }
-    
+
     changes = changes || obj.controller + '' != controllerCache[n] + '';
     if (obj.controller) {
         controllerCache[n] = obj.controller;
@@ -27,15 +27,19 @@ var save = function(n, obj, exists) {
 
 
     if (changes && exists) {
-        var elm = angular.element(document.querySelector('.ng-scope'));
+        var elm = angular.element(document.querySelector('[ng-app]'));
         if (elm) {
-            $state = elm.injector().get('$state');
+            if (elm.injector().has('$state')) {
+                var $state = elm.injector().get('$state');
 
-            $state.transitionTo($state.current, $state.params, {
-                reload: true,
-                inherit: false,
-                notify: true
-            });
+                $state.transitionTo($state.current, $state.params, {
+                    reload: true,
+                    inherit: false,
+                    notify: true
+                });
+            } else {
+                elm.injector().get('$compile')(elm.contents())(elm.scope());
+            }
         }
     }
 
@@ -81,13 +85,13 @@ var directive = function(n, d) {
         });
         MODULE_CACHE[n] = true;
     } else {
-        if(!changes) {
+        if (!changes) {
             window.location.reload();
         }
     }
 
-    
-    
+
+
     return {
         directive: directive
     };
