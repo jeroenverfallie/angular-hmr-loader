@@ -1,7 +1,11 @@
 {
   "name": "angular-hmr-loader",
   "version": "0.0.1",
-  "description": "",
+  "description": "An angular hot reload solution Proof of Concept",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jeroenverfallie/angular-hmr-loader"
+  },
   "main": "index.js",
   "dependencies": {
     "source-map": "0.1.40"
